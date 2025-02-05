@@ -118,10 +118,22 @@ def main():
                 fout.write(full_payload+'\n')
             for mode in data['prefixes'].keys():
                 if mode == 'Global':
-                    continue
-                mode_prefixes = data['prefixes']['Global'] + data['prefixes'][mode]
-                mode_payloads = data['payloads']['Global'] + data['payloads'][mode]
-                mode_suffixes = data['suffixes']['Global'] + data['suffixes'][mode]
+                    if len(data['prefixes'].keys()) > 1:
+                        continue
+                    else:
+                        mode_prefixes = data['prefixes']['Global']
+                        mode_payloads = data['payloads']['Global']
+                        mode_suffixes = data['suffixes']['Global']
+                else:
+                    mode_prefixes = data['prefixes']['Global'] + data['prefixes'][mode]
+                    mode_payloads = data['payloads']['Global'] + data['payloads'][mode]
+                    mode_suffixes = data['suffixes']['Global'] + data['suffixes'][mode]
+                if len(mode_prefixes) == 0:
+                    mode_prefixes = ['']
+                if len(mode_payloads) == 0:
+                    mode_payloads = ['']
+                if len(mode_suffixes) == 0:
+                    mode_suffixes = ['']
                 for prefix in mode_prefixes:
                     for payload in mode_payloads:
                         for suffix in mode_suffixes:
